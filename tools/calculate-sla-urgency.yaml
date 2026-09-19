@@ -1,0 +1,32 @@
+annotations:
+  cost: none
+  read_only: true
+  requires_confirmation: false
+description: Compute SLA time remaining and required response cadence.
+input_schema:
+  additionalProperties: false
+  properties:
+    contract_tier:
+      type: string
+    current_state:
+      type: string
+    ticket_created_at:
+      type: string
+  required:
+  - ticket_created_at
+  - contract_tier
+  type: object
+name: calculate-sla-urgency
+output_schema:
+  additionalProperties: false
+  properties:
+    confidence:
+      type: number
+    data:
+      type: string
+    status:
+      type: string
+  required:
+  - status
+  - data
+  type: object

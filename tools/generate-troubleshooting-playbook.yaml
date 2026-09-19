@@ -1,0 +1,31 @@
+annotations:
+  cost: none
+  read_only: true
+  requires_confirmation: false
+description: Synthesize contextual remediation steps for cloud or software error signatures.
+input_schema:
+  additionalProperties: false
+  properties:
+    error_code:
+      type: string
+    product_area:
+      type: string
+    stack_trace:
+      type: string
+  required:
+  - error_code
+  type: object
+name: generate-troubleshooting-playbook
+output_schema:
+  additionalProperties: false
+  properties:
+    confidence:
+      type: number
+    data:
+      type: string
+    status:
+      type: string
+  required:
+  - status
+  - data
+  type: object

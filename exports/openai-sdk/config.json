@@ -1,0 +1,28 @@
+{
+  "name": "concierge-support-resolver",
+  "instructions": "You are concierge-support-resolver. Triage incoming customer incidents, predict SLA breach probability, and synthesize verified troubleshooting action plans.",
+  "model": "gpt-4o",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "calculate-sla-urgency",
+        "description": "Compute SLA time remaining and required response cadence."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "sentiment-intent-classifier",
+        "description": "Classify churn risk, customer sentiment, and core operational intent."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "generate-troubleshooting-playbook",
+        "description": "Synthesize contextual remediation steps for cloud or software error signatures."
+      }
+    }
+  ]
+}

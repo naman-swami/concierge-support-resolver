@@ -1,0 +1,6 @@
+spec_version: "0.1.0"
+name: concierge-support-resolver
+version: "0.1.0"
+description: "Multi-tier customer support resolution, SLA breach prevention, and sentiment escalation agent providing deterministic technical remediation playbooks."
+model:
+  preferred: llama-3.3-70b-versatile

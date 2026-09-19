@@ -1,0 +1,29 @@
+annotations:
+  cost: none
+  read_only: true
+  requires_confirmation: false
+description: Classify churn risk, customer sentiment, and core operational intent.
+input_schema:
+  additionalProperties: false
+  properties:
+    customer_history_context:
+      type: string
+    message_body:
+      type: string
+  required:
+  - message_body
+  type: object
+name: sentiment-intent-classifier
+output_schema:
+  additionalProperties: false
+  properties:
+    confidence:
+      type: number
+    data:
+      type: string
+    status:
+      type: string
+  required:
+  - status
+  - data
+  type: object
