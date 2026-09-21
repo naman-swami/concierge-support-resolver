@@ -1,0 +1,3 @@
+{
+  "urgency_triggers": ["down", "outage", "production down", "losing money", "critical bug"]
+}

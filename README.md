@@ -55,7 +55,7 @@ concierge-support-resolver/
 │   └── itil_incident_management.md  # ITIL service standard
 ├── tests/
 │   └── test_agent.py                # Support triage test suite
-├── main.py                          # Support desk CLI
+├── resolve.py                          # Support desk CLI
 └── requirements.txt
 ```
 
@@ -66,5 +66,5 @@ concierge-support-resolver/
 pytest tests/ -v
 
 # Triage benchmark support queue
-python main.py --demo
+python resolve.py --demo
 ```
