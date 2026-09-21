@@ -1,0 +1,16 @@
+[
+  {
+    "ticket_id": "TICK-401",
+    "customer_tier": "ENTERPRISE",
+    "subject": "URGENT: Production database locked and service down",
+    "body": "Our entire European team is locked out. We are losing $50k/hour. Resolve immediately!",
+    "reported_at_hour": 14
+  },
+  {
+    "ticket_id": "TICK-402",
+    "customer_tier": "FREE",
+    "subject": "Question about dark mode settings",
+    "body": "Hi there, where can I toggle dark mode in the mobile iOS app?",
+    "reported_at_hour": 15
+  }
+]

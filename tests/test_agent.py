@@ -1,27 +1,15 @@
+import os
 import pytest
-from src.resolver_engine import SupportResolverEngine
+from triage.sla_priority_matrix import SupportTicketTriager
 
-def test_enterprise_emergency_ticket():
-    engine = SupportResolverEngine()
-    ticket = {
-        "ticket_id": "T-1",
-        "customer_tier": "ENTERPRISE",
-        "customer_mrr_usd": 50000,
-        "message": "Major system outage, emergency!"
-    }
-    res = engine.analyze_ticket(ticket)
-    assert res["priority_level"] == "P1_CRITICAL"
-    assert res["sla_response_minutes"] == 15
-    assert res["assigned_routing_queue"] == "EXECUTIVE_ESCALATION_DESK"
+def test_enterprise_outage_p1():
+    ticket = {"ticket_id": "T1", "customer_tier": "ENTERPRISE", "subject": "Database down", "body": "Critical service locked"}
+    res = SupportTicketTriager.evaluate_ticket(ticket)
+    assert res["priority_tier"] == "P1_CRITICAL"
+    assert res["sla_target_hours"] == 1
 
-def test_standard_ticket():
-    engine = SupportResolverEngine()
-    ticket = {
-        "ticket_id": "T-2",
-        "customer_tier": "STANDARD",
-        "customer_mrr_usd": 200,
-        "message": "How do I update my profile picture?"
-    }
-    res = engine.analyze_ticket(ticket)
-    assert res["priority_level"] == "P3_NORMAL"
-    assert res["sla_response_minutes"] == 240
+def test_standard_ticket_p3():
+    ticket = {"ticket_id": "T2", "customer_tier": "FREE", "subject": "Feature request", "body": "Can you add a blue theme?"}
+    res = SupportTicketTriager.evaluate_ticket(ticket)
+    assert res["priority_tier"] == "P3_STANDARD"
+    assert res["sla_target_hours"] == 24
