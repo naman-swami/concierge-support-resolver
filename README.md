@@ -1,70 +1,46 @@
-# Concierge Customer Support & SLA Resolver
+# Concierge Service Desk & ITIL 4 Triage Engine
 
-[![OpenGAP](https://img.shields.io/badge/OpenGAP-0.1.0-blue.svg)](agent.yaml)
-[![Support](https://img.shields.io/badge/Domain-Customer_Success_ITIL-blue.svg)](docs/itil_incident_management.md)
-[![Standard](https://img.shields.io/badge/Standard-ITIL_4_Incident-green.svg)](docs/itil_incident_management.md)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](requirements.txt)
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](.github/workflows/ci.yml)
+> **IT Service Management (ITSM) Incident Priority Matrix & Customer Sentiment Classifier**  
+> Streamlining Enterprise Support Queues, Escalation Runbooks, and Service Level Agreements.
 
-An automated ITIL 4 service desk support ticket triage and SLA routing engine evaluating customer tier commitments, sentiment urgency, and escalation triggers.
+---
 
-```
-                    ┌─────────────────────────┐
-                    │ Inbound Support Tickets │
-                    │ (Subject, Body, Tier)   │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ triage/sla_priority     │
-                    └────────────┬────────────┘
-                                 │
-                 ┌───────────────┴───────────────┐
-                 ▼                               ▼
-      ┌─────────────────────┐         ┌─────────────────────┐
-      │  Urgency Detection  │         │  SLA Allocation     │
-      │  (Production Down)  │         │   (P1: 1h / P3: 24h)│
-      └──────────┬──────────┘         └──────────┬──────────┘
-                 │                               │
-                 └───────────────┬───────────────┘
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ Escalation Action       │
-                    │ (PagerDuty / Tier Desk) │
-                    └─────────────────────────┘
-```
-
-## Features
-
-- **ITIL 4 Incident Classification**: Stratifies inbound issues into P1 (Critical), P2 (High), and P3 (Standard).
-- **Automated Escalation Dispatch**: Routes enterprise outages directly to on-call engineering.
-- **Queue Benchmarks**: Includes real enterprise and consumer support ticket streams.
-
-## Directory Structure
+### ITIL 4 Priority Matrix (Impact vs. Urgency)
 
 ```
-concierge-support-resolver/
-├── agent.yaml                       # OpenGAP 0.1.0 Manifest
-├── EXPLAINABILITY.md                # 7-checkpoint support triage provenance
-├── triage/
-│   └── sla_priority_matrix.py       # ITIL ticket classifier
-├── fixtures/
-│   └── tickets/
-│       └── sample_support_queue.json # Benchmark ticket queue
-├── docs/
-│   └── itil_incident_management.md  # ITIL service standard
-├── tests/
-│   └── test_agent.py                # Support triage test suite
-├── resolve.py                          # Support desk CLI
-└── requirements.txt
+                            INCIDENT IMPACT
+                     HIGH          MEDIUM          LOW
+                 ┌──────────────┬──────────────┬──────────────┐
+           HIGH  │ P1: CRITICAL │ P2: HIGH     │ P3: MEDIUM   │
+                 │ (1h SLA)     │ (4h SLA)     │ (12h SLA)    │
+   INCIDENT      ├──────────────┼──────────────┼──────────────┤
+   URGENCY MEDIUM│ P2: HIGH     │ P3: MEDIUM   │ P4: LOW      │
+                 │ (4h SLA)     │ (12h SLA)    │ (24h SLA)    │
+                 ├──────────────┼──────────────┼──────────────┤
+           LOW   │ P3: MEDIUM   │ P4: LOW      │ P5: INQUIRY  │
+                 │ (12h SLA)    │ (24h SLA)    │ (72h SLA)    │
+                 └──────────────┴──────────────┴──────────────┘
 ```
 
-## Quick Start
+---
+
+### Sentiment & Churn Risk Heuristics
+
+The triage evaluator analyzes incoming customer message streams for frustration markers and contract cancellation keywords:
+
+- **Urgency Multipliers**: Explicit legal threat ("breach of contract", "litigation") or executive escalation ("C-level escalation") immediately promotes ticket to **P1**.
+- **Churn Risk Flag**: Negative polarity sentiment combined with account ARR $> \$50,000$ triggers automated Account Executive notification.
+
+---
+
+### Support Ticket Triage Execution
 
 ```bash
-# Run support triage tests
-pytest tests/ -v
-
-# Triage benchmark support queue
+# Ingest and triage benchmark customer support ticket queue
 python resolve.py --demo
+
+# Run ITSM classification unit tests
+pytest tests/ -v
 ```
+
+SLA definitions, business hours schedules, and escalation runbooks are detailed in [SLA_FRAMEWORK.md](SLA_FRAMEWORK.md).
